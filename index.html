@@ -59,6 +59,9 @@
     .highlight{
       color: blue;
     }
+    /* .result_text b{
+      color: blue;
+    } */
     
     .mtop{
       padding-top: 50px;
@@ -129,11 +132,11 @@
       background-color: #fff;
       margin: 0 auto;
       padding: 10px;
-      border: 1px solid #888;
+      border: 2px solid #fff;
       width: 100%;
       max-width: 85vw;
       height: fit-content;
-      max-height: 90vh;
+      max-height: 85vh;
       border-radius: 8px;
       position: relative;
     }
@@ -217,7 +220,10 @@
       <button id="copy_click">Copy</button>
     </div>
   </div>
-
+  <!-- This is a comment
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  -->
   <script>
     let previous ="";
     let textContent="";
@@ -591,6 +597,8 @@
         textContent = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No content found';
         // alert(textContent);
         result_text.innerHTML=convertToHTML(textContent);
+        // result_text.innerHTML=marked.parse(textContent);
+      //  console.log(marked.parse(textContent))
         modal2.style.display = "flex";
         movetotop(selectedChatId);
         
@@ -614,7 +622,7 @@
     const permission = await navigator.permissions.query({ name: 'clipboard-read' });
     if (permission.state === 'granted' || permission.state === 'prompt') {
        text1 = await navigator.clipboard.readText();
-        apilogic(text1,selectedPrompt);
+        apilogic(text1,selectedPrompt,selectedChatId);
    
     } else {
       alert("Clipboard permission not granted.");
