@@ -14,7 +14,7 @@
       height: 100dvh;
       background-color: black;
       position: relative;
-  
+      justify-content: center;
     }
     /* Chat container (main page) */
     #chat-container {
@@ -22,7 +22,95 @@
       flex: 1;
       overflow-y: auto;
       padding: 10px;
+     
     }
+    
+    /* code for bottom input */
+    .chat-input-bar-container { /* For positioning the bar */
+            
+           
+            display: flex;
+  
+            background-color: black;
+          
+            width: 100%;
+           
+            max-width: 700px; /* Max width for larger screens */
+        
+        }
+
+        .chat-input-bar {
+          margin: 8px 6px;
+          width: 100%;
+            display: flex;
+            align-items: flex-end; /* Aligns items to the bottom, good for a growing textarea */
+            padding: 5px 6px;
+            background-color: #202123; /* Main background color of the input bar */
+            border-radius: 28px;
+            border: 1px solid #fff;  /* Border color */
+                 /* Rounded pill shape */
+             
+        }
+        textarea{
+         font-family: sans-serif;
+         font-size: 20px;
+         
+                       
+        }
+        .icon-button {
+            background: none;
+            border: none;
+            color: #BDC1C6; /* Default icon color */
+            cursor: pointer;
+            padding: 0; /* Remove default button padding */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; /* Prevent icons from shrinking */
+        }
+
+        #chat-input {
+            flex-grow: 1; /* Textarea takes available space */
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: #E8EAED; /* Text color inside textarea */
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.4; /* (15px * 1.4 = 21px line height) */
+            resize: none; /* Disable manual resize by user */
+            overflow-y: hidden; /* Initially hide scrollbar */
+            padding: 10px 0; /* Vertical padding: (40px target - 21px line height) / 2 approx. */
+            margin: 0 8px; /* Horizontal margin for spacing */
+            box-sizing: border-box;
+            /* rows="1" attribute handles initial height along with padding and line-height */
+        }
+
+        #chat-input::placeholder {
+            color: #707579; /* Muted color for placeholder text */
+        }
+
+        .send-button {
+            background-color: #303134; /* Background of the send button circle */
+            border-radius: 50%; /* Makes it a circle */
+            width: 45px;
+            -webkit-tap-highlight-color: transparent; /* Removes the tap highlight on mobile (especially Chrome/Safari) */
+            margin: auto 0;
+            user-select: none;     /* Prevents text selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            height: 45px;
+            color: #E8EAED; /* Send icon color */
+        }
+
+        .send-button svg {
+            width: 20px; /* Size of the SVG icon */
+            height: 20px;
+        }
+
+        
+    /* code for bottom input finish */
+    
     
     
     .chat-item {
@@ -61,8 +149,10 @@
     }
     /* .result_text b{
       color: blue;
+    } 
+    result_text{
+      font-size: 40px !important;
     } */
-    
     .mtop{
       padding-top: 50px;
     }
@@ -73,27 +163,8 @@
       padding: 10px;
       background: #ddd; 
     }
-    #message-input {
-       flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px; 
-    }
    
-    #send-btn {
-    background: #007BFF;
-    color: white;
-    border: none;
-    height: fit-content;
-    margin-bottom: auto;
-    margin-top: auto;
-    /* flex: 1; */
-    padding: 10px 10px;
-    margin-left: 10px;
-    border-radius: 5px;
-    font-size: 17px;
-    }
+    
     /* "New" button at top right */
     #new-btn,#pre-btn {
       position: absolute;
@@ -131,10 +202,10 @@
       flex-direction: column;
       background-color: #fff;
       margin: 0 auto;
-      padding: 10px;
+      padding: 8px;
       border: 2px solid #fff;
       width: 100%;
-      max-width: 85vw;
+      max-width: 90vw;
       height: fit-content;
       max-height: 85vh;
       border-radius: 8px;
@@ -175,8 +246,11 @@
     }
     
     #myModal2{
-      /* max-height: 85vh; */
-       background-color: rgba(0,0,0);
+     
+     background-color: rgba(0,0,0);
+     display: flex;
+          
+           
     }
   
   </style>
@@ -191,12 +265,21 @@
   <div id="chat-container">
     <!-- Chat items will be loaded here from IndexedDB -->
   </div>
-
-  <!-- Input area -->
-  <div id="input-container">
-    <input type="text" id="message-input" placeholder="Type a message...">
-    <button id="send-btn">➤</button>
-  </div>
+    <!-- input container  -->
+  
+  <div class="chat-input-bar-container">
+        <div class="chat-input-bar">
+            
+            <textarea id="chat-input" placeholder="Ask anything" rows="1"></textarea>
+            <button class="icon-button send-button" id="send-btn" aria-label="Send message">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+  
+  
 
   <!-- Modal for adding/editing a chat item -->
   <div id="myModal" class="modal">
@@ -215,7 +298,7 @@
       <div class="container1">
         
       
-      <b id="result_text"> </b>
+      <b id="result_text">lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fug</b>
 </div>
       <button id="copy_click">Copy</button>
     </div>
@@ -225,6 +308,92 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   -->
   <script>
+    // --------input con code-------------
+    document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.getElementById('chat-input');
+            const maxRows = 5;
+
+            let initialEmptyHeight;      // Calculated height of the textarea when empty (1 row)
+            let singleLineContentHeight; // Calculated height of the content area for one line
+            let paddingTop, paddingBottom; // Store textarea's vertical padding
+
+            function measureTextareaParameters() {
+                const originalValue = textarea.value;
+                const originalScrollTop = textarea.scrollTop;
+                const originalHeightStyle = textarea.style.height;
+
+                // Measure padding
+                const computedStyle = getComputedStyle(textarea);
+                paddingTop = parseFloat(computedStyle.paddingTop);
+                paddingBottom = parseFloat(computedStyle.paddingBottom);
+
+                // Measure height when empty (should be 1 row based on CSS and rows attribute)
+                textarea.value = '';
+                textarea.rows = 1; // Ensure it's treated as 1 row
+                textarea.style.height = 'auto'; // Allow CSS/rows to determine height
+                initialEmptyHeight = textarea.scrollHeight; // This is total height for 1 line (content + padding)
+                
+                // Calculate content height of a single line
+                singleLineContentHeight = initialEmptyHeight - paddingTop - paddingBottom;
+
+                // Restore original state before this measurement
+                textarea.value = originalValue;
+                textarea.style.height = originalHeightStyle; // Restore explicitly set style, if any
+                textarea.scrollTop = originalScrollTop;
+
+                // Perform an initial adjustment based on current content (if any)
+                adjustTextareaHeight();
+            }
+            
+            // Measure parameters once the layout is stable
+            requestAnimationFrame(measureTextareaParameters);
+
+            function adjustTextareaHeight() {
+                // Ensure parameters are measured. If not, this function might be called too early.
+                if (typeof singleLineContentHeight === 'undefined') {
+                    // This might happen if 'input' fires before rAF completes.
+                    // A simple immediate auto-height can be a fallback.
+                    textarea.style.height = 'auto';
+                    textarea.style.height = textarea.scrollHeight + 'px';
+                    return;
+                }
+
+                const originalScrollTop = textarea.scrollTop; // Preserve scroll position
+                textarea.style.height = 'auto'; // Key step: reset height to content size to get correct scrollHeight
+
+                if (textarea.value === '') {
+                    // When cleared, shrink to the original single-row height
+                    textarea.style.height = `${initialEmptyHeight}px`;
+                    textarea.style.overflowY = 'hidden';
+                } else {
+                    const currentScrollHeight = textarea.scrollHeight;
+                    
+                    // Calculate max allowed height based on maxRows
+                    // (content height for maxRows) + vertical padding
+                    const maxAllowedHeight = (singleLineContentHeight * maxRows) + paddingTop + paddingBottom;
+
+                    if (currentScrollHeight > maxAllowedHeight) {
+                        textarea.style.height = `${maxAllowedHeight}px`;
+                        textarea.style.overflowY = 'auto'; // Show scrollbar
+                    } else {
+                        // Grow to fit content, but not less than the initial empty height
+                        textarea.style.height = `${Math.max(currentScrollHeight, initialEmptyHeight)}px`;
+                        textarea.style.overflowY = 'hidden'; // Hide scrollbar
+                    }
+                }
+                textarea.scrollTop = originalScrollTop; // Restore scroll position to prevent jumping
+            }
+
+            textarea.addEventListener('input', adjustTextareaHeight);
+
+            // Optional: Recalculate parameters and adjust on window resize
+            // Useful if font-size or other layout-affecting properties change
+            window.addEventListener('resize', () => {
+                requestAnimationFrame(measureTextareaParameters);
+            });
+        });
+    
+    // ---------------------------
     let previous ="";
     let textContent="";
     // ---------------------------
@@ -235,7 +404,7 @@
     // Global cache for chat data keyed by id
     let chatData = {};
     let editingItemId = null; // To store the ID of the item being edited
-    let message_input= document.getElementById("message-input");
+    let message_input= document.getElementById("chat-input");
     
     const request = indexedDB.open("ChatDB", 1);
 
@@ -437,7 +606,7 @@
     const result_text = document.getElementById("result_text");
 
     preBtn.onclick = function() {
-      document.getElementById("message-input").value=previous;
+      document.getElementById("chat-input").value=previous;
     };
 
     newBtn.onclick = function() {
@@ -613,7 +782,7 @@
     // Send Button Functionality
     // ---------------------------
     document.getElementById("send-btn").onclick = async function() { // Mark the function as async
-    const message = document.getElementById("message-input").value.trim();
+    const message = document.getElementById("chat-input").value.trim();
     
      const selectedPrompt = chatData[selectedChatId] ? chatData[selectedChatId].prompt : "No prompt found";
     
@@ -640,8 +809,8 @@
     
 
     // Clear input after sending
-    previous = document.getElementById("message-input").value;
-    document.getElementById("message-input").value = "";
+    previous = document.getElementById("chat-input").value;
+    document.getElementById("chat-input").value = "";
     apilogic(message,selectedPrompt,selectedChatId);
     
     
