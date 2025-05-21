@@ -768,7 +768,10 @@
         // result_text.innerHTML=marked.parse(textContent);
       //  console.log(marked.parse(textContent))
         modal2.style.display = "flex";
+ 
+        if(selectedChatId!=1){
         movetotop(selectedChatId);
+        }
         
     } catch (error) {
         console.error("Error:", error);
