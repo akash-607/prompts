@@ -18,7 +18,7 @@
     }
     /* Chat container (main page) */
     #chat-container {
-      margin-top: 50px;
+      
       flex: 1;
       overflow-y: auto;
       padding: 10px;
@@ -51,11 +51,9 @@
                  /* Rounded pill shape */
              
         }
-        textarea{
+        .chat-input-bar textarea{
          font-family: sans-serif;
          font-size: 20px;
-         
-                       
         }
         .icon-button {
             background: none;
@@ -163,26 +161,24 @@
       padding: 10px;
       background: #ddd; 
     }
-   
-    
     /* "New" button at top right */
-    #new-btn,#pre-btn {
-      position: absolute;
-      top: 10px;
+    .topbtn {
       background: #28a745;
       color: white;
       border: none;
+      margin: 0 3px;
       padding: 10px 15px;
       border-radius: 5px;
       font-size: 16px;
-      z-index: 2;
     }
-    #new-btn{
-      right: 10px;
+    .topbar{
+      display: flex;
+      margin-right: 7px;
+      margin-bottom: 2px;
+      justify-content: right;
+      margin-top: 10px;
     }
-    #pre-btn{
-      right: 80px;
-    }
+   
     /* Modal styling */
     .modal {
       display: none; 
@@ -195,6 +191,14 @@
       height: 100%;
       overflow: auto;
       background-color: rgba(0,0,0,0.4);
+    }
+    
+    .modal-content textarea{
+      font-family: sans-serif;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
  
     .modal-content {
@@ -255,10 +259,15 @@
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <!-- "Pre" button -->
+  <button class="topbtn" id="res-btn">Res</button>
   <!-- "Pre" button -->
-  <button id="pre-btn">Pre</button>
+  <button class="topbtn" id="pre-btn">Pre</button>
   <!-- "New" button -->
-  <button id="new-btn">New</button>
+  <button class="topbtn" id="new-btn">New</button>
+  </div>
+  
 
   <!-- Chat items container -->
   <div id="chat-container">
@@ -285,7 +294,7 @@
     <div class="modal-content">
       <span id="modal-close" class="close">×</span>
       <input type="text" id="modal-title" placeholder="Title">
-      <input type="text" id="modal-prompt" placeholder="Prompt">
+      <textarea id="modal-prompt" placeholder="Prompt" rows="5" cols="50"></textarea>
       <button id="add-btn">Add</button>
     </div>
   </div>
@@ -595,6 +604,7 @@
     const modal = document.getElementById("myModal");
     const modal2 = document.getElementById("myModal2");
     const preBtn = document.getElementById("pre-btn");
+    const resBtn = document.getElementById("res-btn");
     const newBtn = document.getElementById("new-btn");
     const closeModal = document.getElementsByClassName("close")[0];
     const closeModal2 = document.getElementsByClassName("close")[1];
@@ -606,6 +616,12 @@
 
     preBtn.onclick = function() {
       document.getElementById("chat-input").value=previous;
+    };
+    resBtn.onclick = function() {
+      if(textContent!=""){
+        result_text.innerHTML=convertToHTML(textContent);
+        modal2.style.display = "flex";
+      }
     };
 
     newBtn.onclick = function() {
