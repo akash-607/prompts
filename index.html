@@ -261,6 +261,7 @@
 <body>
   <div class="topbar">
     <!-- "Pre" button -->
+  <button class="topbtn" id="get-btn">get</button>
   <button class="topbtn" id="res-btn">Res</button>
   <!-- "Pre" button -->
   <button class="topbtn" id="pre-btn">Pre</button>
@@ -401,6 +402,7 @@
             });
         });
     
+    // --------input code end---------
     // ---------------------------
     let previous ="";
     let textContent="";
@@ -605,6 +607,7 @@
     const modal2 = document.getElementById("myModal2");
     const preBtn = document.getElementById("pre-btn");
     const resBtn = document.getElementById("res-btn");
+    const getBtn = document.getElementById("get-btn");
     const newBtn = document.getElementById("new-btn");
     const closeModal = document.getElementsByClassName("close")[0];
     const closeModal2 = document.getElementsByClassName("close")[1];
@@ -622,6 +625,53 @@
         result_text.innerHTML=convertToHTML(textContent);
         modal2.style.display = "flex";
       }
+    };
+    getBtn.onclick = function() {
+     
+  const dbName = "ChatDB";
+  const storeName = "ChatDB"; // Object store name
+
+  const request = indexedDB.open(dbName);
+
+  request.onerror = function(event) {
+    console.error("Database error:", event.target.error);
+  };
+
+  request.onsuccess = function(event) {
+    const db = event.target.result;
+    const transaction = db.transaction([storeName], "readonly");
+    const objectStore = transaction.objectStore(storeName);
+
+    const allData = [];
+    const cursorRequest = objectStore.openCursor();
+
+    cursorRequest.onerror = function(event) {
+      console.error("Cursor error:", event.target.error);
+    };
+
+    cursorRequest.onsuccess = function(event) {
+      const cursor = event.target.result;
+      if (cursor) {
+        allData.push(cursor.value);
+        cursor.continue();
+      } else {
+        // Done collecting data
+        const jsonData = JSON.stringify(allData, null, 2);
+        const blob = new Blob([jsonData], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "ChatDB_export.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        console.log("Data exported successfully.");
+      }
+    };
+  };
+
     };
 
     newBtn.onclick = function() {
